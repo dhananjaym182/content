@@ -1,0 +1,94 @@
+<style>
+  /* Table of contents */
+  .table-of-contents {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 11px;
+    margin: 8px 0 30px 0;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .table-of-contents:hover {
+    background: #ddd;
+  }
+
+  .table-of-contents h4 {
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .table-of-contents h4:hover {
+    color: #1d3557;
+  }
+
+  .table-of-contents ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    transition: height 0.2s ease-in-out;
+  }
+
+  .table-of-contents ul.show {
+    display: block;
+    height: auto;
+  }
+
+  .table-of-contents li {
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .table-of-contents li:hover {
+    opacity: 0.7;
+  }
+  
+  
+</style>
+
+<script>
+  // Create table of contents
+  function createTableOfContents() {
+    const ToC = document.createElement('nav');
+    ToC.className = 'table-of-contents';
+    ToC.setAttribute('role', 'navigation');
+    ToC.innerHTML = `
+      <h4 onclick="toggleToC()">⇅ Table of Contents</h4>
+      <ul></ul>
+    `;
+
+    const headings = document.querySelectorAll('article h2, article h3, article h4, article h5');
+    headings.forEach((heading, index) => {
+      const title = heading.textContent;
+      const link = `#point${index}`;
+      heading.id = `point${index}`;
+      const item = document.createElement('li');
+      item.innerHTML = `<a href="${link}">${title}</a>`;
+      ToC.querySelector('ul').appendChild(item);
+    });
+
+    document.querySelector('.toc-pros').prepend(ToC);
+  }
+
+  // Toggle table of contents
+  function toggleToC() {
+    const toc = document.querySelector('.table-of-contents ul');
+    const tocHeight = toc.scrollHeight;
+
+    if (toc.classList.contains('show')) {
+      toc.style.height = 0;
+      toc.classList.remove('show');
+    } else {
+      toc.style.height = `${tocHeight}px`;
+      toc.classList.add('show');
+    }
+  }
+
+  // Initialize table of contents
+  window.addEventListener('load', createTableOfContents);
+</script>
