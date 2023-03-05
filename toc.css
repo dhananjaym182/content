@@ -32,12 +32,12 @@
     padding: 0;
     list-style: none;
     overflow: hidden;
+    height: 0; /* set initial height to 0 */
     transition: height 0.2s ease-in-out;
   }
 
   .table-of-contents ul.show {
-    display: block;
-    height: auto;
+    height: auto; /* set height to auto when the show class is added */
   }
 
   .table-of-contents li {
